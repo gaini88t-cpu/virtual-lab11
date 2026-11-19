@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>№1 Виртуалды зертхана: Иммобилизацияланған ферменттер</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    /* Custom Animations for Lab Equipment */
+    @keyframes drip {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      70% { transform: translateY(65px) scale(0.95); opacity: 1; }
+      100% { transform: translateY(85px) scale(1.1); opacity: 0; }
+    }
+    .animate-drip {
+      animation: drip 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    .bead-float {
+      animation: bubbleFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    }
+    .btn-pulse {
+      animation: pulseGlow 2s infinite;
+    }
+
+    /* Curdling texture overlay */
+    .curdle-pattern {
+      background-image: radial-gradient(#e2e8f0 20%, transparent 20%),
+                        radial-gradient(#cbd5e1 20%, transparent 20%);
+      background-color: #ffffff;
+      background-position: 0 0, 8px 8px;
+      background-size: 16px 16px;
+    }
+
+    /* Smooth tab transitions */
+    .tab-panel {
+      transition: opacity 0.25s ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Header & Theory Banner -->
+  <header class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-800 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-emerald-700/70 border border-emerald-500/40 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase mb-1.5">
+            <span>🔬 1-зертханалық жұмыс</span>
+            <span>•</span>
+            <span>Виртуалды зертхана</span>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">
+            Иммобилизацияланудың ферменттердің белсенділігіне әсерін зерттеу
+          </h1>
+        </div>
+        <button onclick="toggleTheoryModal()" class="self-start md:self-center inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white border border-white/25 px-4 py-2 rounded-xl text-sm font-semibold transition">
+          <span>🧬 Теориялық анықтама</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Theory & Molecular Callout (Collapsible) -->
+  <div id="theory-banner" class="bg-emerald-50 border-b border-emerald-200 transition-all">
+    <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+        <div class="lg:col-span-2 space-y-2">
+          <p class="text-sm sm:text-base text-emerald-950 leading-relaxed">
+            <strong class="text-emerald-800">Тірек ұғым:</strong> Тасымалдаушылармен байланысқанда қасиеттері өзгермейтін ферменттер <span class="underline decoration-emerald-500 font-bold">иммобилизацияланған ферменттер</span> деп аталады.
+          </p>
+          <p class="text-sm text-emerald-900">
+            <strong class="text-emerald-800">Жұмыс мақсаты:</strong> Иммобилизацияланудың ферменттердің белсенділігіне әсерін тәжірибе жүзінде анықтау.
+          </p>
+        </div>
+        <!-- Mini Molecular Infographic -->
+        <div class="bg-white rounded-xl p-3 border border-emerald-200 shadow-sm flex items-center justify-around">
+          <div class="text-center">
+            <svg class="w-24 h-16 mx-auto" viewBox="0 0 120 70">
+              <!-- Free enzymes -->
+              <circle cx="25" cy="25" r="9" fill="#f59e0b" />
+              <path d="M25 25 L33 20 A9 9 0 0 1 33 30 Z" fill="#ffffff" />
+              <circle cx="65" cy="45" r="9" fill="#f59e0b" />
+              <path d="M65 45 L73 40 A9 9 0 0 1 73 50 Z" fill="#ffffff" />
+              <circle cx="95" cy="22" r="9" fill="#f59e0b" />
+              <path d="M95 22 L103 17 A9 9 0 0 1 103 27 Z" fill="#ffffff" />
+            </svg>
+            <span class="text-xs font-bold text-amber-700 block">Бос ферменттер</span>
+            <span class="text-[11px] text-slate-500">Жылдам, бір реттік</span>
+          </div>
+          <div class="h-12 w-px bg-slate-200"></div>
+          <div class="text-center">
+            <svg class="w-24 h-16 mx-auto" viewBox="0 0 120 70">
+              <!-- Carrier matrix (gel/beads) -->
+              <rect x="15" y="12" width="90" height="46" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2" stroke-dasharray="4 2" />
+              <circle cx="38" cy="35" r="8" fill="#15803d" />
+              <path d="M38 35 L45 31 A8 8 0 0 1 45 39 Z" fill="#dcfce7" />
+              <circle cx="62" cy="35" r="8" fill="#15803d" />
+              <path d="M62 35 L69 31 A8 8 0 0 1 69 39 Z" fill="#dcfce7" />
+              <circle cx="86" cy="35" r="8" fill="#15803d" />
+              <path d="M86 35 L93 31 A8 8 0 0 1 93 39 Z" fill="#dcfce7" />
+            </svg>
+            <span class="text-xs font-bold text-emerald-700 block">Иммобилизацияланған</span>
+            <span class="text-[11px] text-slate-500">Тұрақты, көп реттік</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex space-x-2 overflow-x-auto py-2.5 no-scrollbar" role="tablist">
+        <button id="tab-btn-1" onclick="switchTab(1)" class="tab-btn flex-shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-emerald-700 text-white shadow-sm transition flex items-center gap-2">
+          <span>🧪 1-тапсырма: Пепсин + Крахмал</span>
+        </button>
+        <button id="tab-btn-2" onclick="switchTab(2)" class="tab-btn flex-shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-2">
+          <span>🟢 2-тапсырма: Лактаза + Альгинат</span>
+        </button>
+        <button id="tab-btn-3" onclick="switchTab(3)" class="tab-btn flex-shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-2">
+          <span>📋 Қорытынды және Өзін-өзі тексеру</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 lg:px-8">
+
+    <!-- =================================================================== -->
+    <!-- TASK 1: PEPSIN IMMOBILIZATION IN STARCH GEL & MILK COAGULATION      -->
+    <!-- =================================================================== -->
+    <section id="panel-1" class="tab-panel space-y-6">
+      
+      <!-- Equipment Strip -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+        <h2 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
+          <span>🧰 Құрал-жабдықтар мен материалдар:</span>
+        </h2>
+        <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+          <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg font-medium">🥛 Сұйылтылмаған сүт</span>
+          <span class="bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1 rounded-lg font-medium">🥣 50 мл 20%-тік картоп крахмалы</span>
+          <span class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-lg font-medium">💧 2%-тік пепсин ерітіндісі</span>
+          <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg font-medium">🧫 2 Петри табақшасы</span>
+          <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg font-medium">🧪 Тамшуыр және стақандар</span>
+          <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg font-medium">⏱️ Секундомер</span>
+        </div>
+      </div>
+
+      <!-- Interactive Bench + Controls -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: Step-by-step Action Panel & Stopwatch (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-bold text-slate-900 text-base">Жұмыс барысы (Қадамдар)</h3>
+              <span id="t1-trial-badge" class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-full">
+                Тәжірибе №1
+              </span>
+            </div>
+
+            <!-- Step 1 -->
+            <div id="t1-step-1" class="p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/40 transition">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="text-xs font-bold uppercase text-emerald-700">1-қадам</span>
+                  <p class="text-sm font-semibold text-slate-800 mt-0.5">50 мл 20%-тік крахмал геліне 5 мл 2%-тік пепсин қосып араластыру</p>
+                </div>
+                <span id="t1-check-1" class="hidden text-emerald-600 font-bold text-lg">✓</span>
+              </div>
+              <button id="btn-t1-mix" onclick="t1MixGel()" class="mt-3 w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm shadow-sm transition btn-pulse">
+                🥣 Крахмал мен пепсинді араластыру
+              </button>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="t1-step-2" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 opacity-60 transition">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="text-xs font-bold uppercase text-slate-500">2-қадам</span>
+                  <p class="text-sm font-semibold text-slate-800 mt-0.5">Петри табақшаларына ферменттерді орналастыру</p>
+                  <p class="text-xs text-slate-500 mt-1">№1: 2 мл гель-пепсин жағу • №2: 0,5 мл бос пепсин құю</p>
+                </div>
+                <span id="t1-check-2" class="hidden text-emerald-600 font-bold text-lg">✓</span>
+              </div>
+              <button id="btn-t1-prep" onclick="t1PrepareDishes()" disabled class="mt-3 w-full py-2.5 px-4 bg-slate-300 text-slate-500 font-semibold rounded-xl text-sm transition cursor-not-allowed">
+                🧫 Петри табақшаларын дайындау
+              </button>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="t1-step-3" class="p-3.5 rounded-xl border border-slate-200 bg-slate-50 opacity-60 transition">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="text-xs font-bold uppercase text-slate-500">3-қадам</span>
+                  <p class="text-sm font-semibold text-slate-800 mt-0.5">Екі табақшаға 10 мл сүт құйып, секундомерді қосу</p>
+                </div>
+                <span id="t1-check-3" class="hidden text-emerald-600 font-bold text-lg">✓</span>
+              </div>
+              <button id="btn-t1-milk" onclick="t1PourMilkAndStart()" disabled class="mt-3 w-full py-2.5 px-4 bg-slate-300 text-slate-500 font-semibold rounded-xl text-sm transition cursor-not-allowed">
+                🥛 10 мл сүт құю және Секундомерді іске қосу
+              </button>
+            </div>
+
+            <!-- Digital Stopwatch Box -->
+            <div class="bg-slate-900 text-white rounded-2xl p-4 flex items-center justify-between shadow-inner">
+              <div>
+                <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Зертханалық секундомер</div>
+                <div id="t1-stopwatch" class="text-3xl font-mono font-extrabold text-emerald-400 mt-0.5">
+                  00.0 <span class="text-sm font-normal text-slate-400">сек</span>
+                </div>
+                <div id="t1-sim-speed" class="text-[11px] text-slate-400 mt-0.5">Бақылау режимі: нақты уақытқа сәйкес</div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <button id="btn-t1-record" onclick="t1RecordTrial()" disabled class="px-3.5 py-2 bg-slate-700 text-slate-400 rounded-xl text-xs font-bold transition cursor-not-allowed">
+                  📥 Кестеге жазу
+                </button>
+                <button onclick="t1ResetCurrentTrial()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition">
+                  🔄 Қайталау
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Visual Lab Canvas (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex-1 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-slate-900 text-base">Визуалды зертхана үстелі</h3>
+              <span id="t1-status-text" class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-100 text-amber-800">
+                1-қадамды орындаңыз
+              </span>
+            </div>
+
+            <!-- Interactive Lab Bench SVG Stage -->
+            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-4 flex items-center justify-center relative overflow-hidden min-h-[290px]">
+              <svg id="t1-svg" class="w-full max-w-2xl h-auto" viewBox="0 0 640 270">
+                <!-- Lab Table Surface -->
+                <rect x="0" y="230" width="640" height="40" fill="#cbd5e1" />
+                <line x1="0" y1="230" x2="640" y2="230" stroke="#94a3b8" stroke-width="2" />
+
+                <!-- Left: Beaker with 20% Starch Gel -->
+                <g id="beaker-group" transform="translate(30, 65)">
+                  <text x="55" y="-12" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">20% Крахмал (50 мл)</text>
+                  <!-- Beaker Glass -->
+                  <path d="M15 0 L15 145 Q15 155 25 155 L85 155 Q95 155 95 145 L95 0" fill="#ffffff" fill-opacity="0.7" stroke="#64748b" stroke-width="2.5" />
+                  <!-- Gel Liquid -->
+                  <rect id="beaker-liquid" x="17" y="65" width="76" height="88" rx="4" fill="#e0f2fe" transition="all 0.5s" />
+                  <!-- Mixed Pepsin Dots (hidden initially) -->
+                  <g id="beaker-pepsin-dots" opacity="0">
+                    <circle cx="35" cy="95" r="3" fill="#d97706" />
+                    <circle cx="55" cy="110" r="3" fill="#d97706" />
+                    <circle cx="72" cy="90" r="3" fill="#d97706" />
+                    <circle cx="42" cy="130" r="3" fill="#d97706" />
+                    <circle cx="68" cy="135" r="3" fill="#d97706" />
+                    <circle cx="52" cy="80" r="3" fill="#d97706" />
+                  </g>
+                  <!-- Measurement ticks -->
+                  <line x1="15" y1="50" x2="26" y2="50" stroke="#64748b" stroke-width="1.5" />
+                  <line x1="15" y1="90" x2="26" y2="90" stroke="#64748b" stroke-width="1.5" />
+                  <line x1="15" y1="130" x2="26" y2="130" stroke="#64748b" stroke-width="1.5" />
+                </g>
+
+                <!-- Center: Petri Dish 1 (Immobilized Pepsin + Starch) -->
+                <g transform="translate(200, 120)">
+                  <text x="90" y="-32" font-size="12" font-weight="800" fill="#166534" text-anchor="middle">Петри табақшасы №1</text>
+                  <text x="90" y="-17" font-size="10.5" font-weight="600" fill="#15803d" text-anchor="middle">(Иммобилизацияланған пепсин)</text>
+                  
+                  <!-- Dish Base -->
+                  <ellipse cx="90" cy="75" rx="82" ry="26" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+                  <!-- Starch Gel Layer -->
+                  <ellipse id="dish1-gel" cx="90" cy="77" rx="76" ry="21" fill="#bbf7d0" opacity="0" />
+                  <!-- Milk Layer -->
+                  <ellipse id="dish1-milk" cx="90" cy="75" rx="76" ry="21" fill="#ffffff" opacity="0" />
+                  <!-- Curdling Clots Group (Immobilized - slower) -->
+                  <g id="dish1-curds" opacity="0">
+                    <circle cx="50" cy="74" r="5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="75" cy="80" r="6" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="105" cy="72" r="5.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="128" cy="78" r="5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="88" cy="68" r="4.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="65" cy="68" r="4" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="115" cy="83" r="4.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                  </g>
+                  <!-- Rim -->
+                  <ellipse cx="90" cy="68" rx="82" ry="24" fill="none" stroke="#475569" stroke-width="2" />
+
+                  <!-- Live Timer Badge under Dish 1 -->
+                  <rect x="25" y="114" width="130" height="26" rx="8" fill="#f0fdf4" stroke="#86efac" />
+                  <text id="dish1-timer-label" x="90" y="131" font-size="11" font-weight="700" fill="#166534" text-anchor="middle">Күтуде...</text>
+                </g>
+
+                <!-- Right: Petri Dish 2 (Free Pepsin) -->
+                <g transform="translate(425, 120)">
+                  <text x="90" y="-32" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">Петри табақшасы №2</text>
+                  <text x="90" y="-17" font-size="10.5" font-weight="600" fill="#d97706" text-anchor="middle">(Бос пепсин — 0,5 мл)</text>
+                  
+                  <!-- Dish Base -->
+                  <ellipse cx="90" cy="75" rx="82" ry="26" fill="#f8fafc" stroke="#64748b" stroke-width="2" />
+                  <!-- Free Pepsin Drops -->
+                  <ellipse id="dish2-pepsin" cx="90" cy="77" rx="70" ry="18" fill="#fde68a" opacity="0" />
+                  <!-- Milk Layer -->
+                  <ellipse id="dish2-milk" cx="90" cy="75" rx="76" ry="21" fill="#ffffff" opacity="0" />
+                  <!-- Curdling Clots Group (Free - faster) -->
+                  <g id="dish2-curds" opacity="0">
+                    <circle cx="48" cy="75" r="5.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="72" cy="79" r="6.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="95" cy="72" r="6" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="118" cy="78" r="5.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="135" cy="73" r="4.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="62" cy="68" r="5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="108" cy="83" r="5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                    <circle cx="83" cy="67" r="4.5" fill="#fef08a" stroke="#eab308" stroke-width="1" />
+                  </g>
+                  <!-- Rim -->
+                  <ellipse cx="90" cy="68" rx="82" ry="24" fill="none" stroke="#475569" stroke-width="2" />
+
+                  <!-- Live Timer Badge under Dish 2 -->
+                  <rect x="25" y="114" width="130" height="26" rx="8" fill="#fffbeb" stroke="#fcd34d" />
+                  <text id="dish2-timer-label" x="90" y="131" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">Күтуде...</text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Interactive Observation Table (Textbook Format) -->
+            <div class="mt-4">
+              <div class="flex items-center justify-between mb-2">
+                <h4 class="font-bold text-slate-800 text-sm">📊 Бақылау нәтижелері кестесі (Сүттің іру уақыты, с)</h4>
+                <button onclick="t1ClearTable()" class="text-xs text-rose-600 hover:text-rose-700 font-semibold">
+                  Кестені тазалау
+                </button>
+              </div>
+              <div class="overflow-x-auto rounded-xl border border-slate-300">
+                <table class="w-full text-sm text-center border-collapse">
+                  <thead>
+                    <tr class="bg-emerald-800 text-white">
+                      <th rowspan="2" class="p-2.5 border border-emerald-700 text-left">Тәжірибе нұсқалары</th>
+                      <th colspan="4" class="p-2 border border-emerald-700">Уақыт, с</th>
+                    </tr>
+                    <tr class="bg-emerald-100 text-emerald-950 font-bold">
+                      <th class="p-2 border border-slate-300">Тәжірибе №1</th>
+                      <th class="p-2 border border-slate-300">Тәжірибе №2</th>
+                      <th class="p-2 border border-slate-300">Тәжірибе №3</th>
+                      <th class="p-2 border border-slate-300 bg-emerald-200">Орташа уақыты</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white">
+                    <tr>
+                      <td class="p-2.5 border border-slate-300 text-left font-bold text-amber-800 bg-amber-50/40">
+                        Пепсин (бос фермент)
+                      </td>
+                      <td id="cell-free-1" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-free-2" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-free-3" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-free-avg" class="p-2.5 border border-slate-300 font-mono font-extrabold text-amber-700 bg-amber-50">—</td>
+                    </tr>
+                    <tr>
+                      <td class="p-2.5 border border-slate-300 text-left font-bold text-emerald-800 bg-emerald-50/40">
+                        Пепсин + крахмал (иммобилизация)
+                      </td>
+                      <td id="cell-imm-1" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-imm-2" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-imm-3" class="p-2.5 border border-slate-300 font-mono font-semibold text-slate-700">—</td>
+                      <td id="cell-imm-avg" class="p-2.5 border border-slate-300 font-mono font-extrabold text-emerald-700 bg-emerald-50">—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="text-xs text-slate-500 mt-1.5">
+                💡 <em>Кеңес:</em> 3 тәжірибені орындап, орташа уақытты салыстырыңыз. Крахмал гелінде иммобилизацияланған фермент субстратқа баяуырақ жететіндіктен (диффузиялық шектеу), сүттің іру уақыты сәл ұзағырақ болады, бірақ ферменттің катализдік қасиеті толық сақталады.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TASK 2: IMMOBILIZED LACTASE IN SODIUM ALGINATE BEADS & GLUCOSE TEST -->
+    <!-- =================================================================== -->
+    <section id="panel-2" class="tab-panel hidden space-y-6">
+      
+      <!-- Equipment Strip -->
+      <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+        <h2 class="text-base font-bold text-slate-800 mb-2 flex items-center gap-2">
+          <span>🧰 Құрал-жабдықтар мен материалдар:</span>
+        </h2>
+        <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
+          <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-lg font-medium">🧪 3% натрий альгинаты (E401)</span>
+          <span class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 rounded-lg font-medium">🧬 Концентрацияланған лактаза</span>
+          <span class="bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1 rounded-lg font-medium">💧 0,2 М CaCl₂ ерітіндісі</span>
+          <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg font-medium">💉 5 мл-лік шприц (инесі Ø 1 мм)</span>
+          <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-lg font-medium">🔻 Құйғыш (воронка)</span>
+          <span class="bg-indigo-50 text-indigo-800 border border-indigo-200 px-3 py-1 rounded-lg font-medium">⚗️ CuSO₄ және NaOH ерітінділері</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: 5-Step Interactive Procedure (5 cols) -->
+        <div class="lg:col-span-5 space-y-3">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h3 class="font-bold text-slate-900 text-base">Жұмыс барысы (Кезеңдер)</h3>
+              <button onclick="t2Reset()" class="text-xs font-semibold text-slate-500 hover:text-slate-800 bg-slate-100 px-2.5 py-1 rounded-lg">
+                🔄 Басынан бастау
+              </button>
+            </div>
+
+            <!-- Stage 1 -->
+            <div id="t2-card-1" class="p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50/40">
+              <p class="text-xs font-bold text-emerald-700 uppercase">1-кезең: Қоспа дайындау</p>
+              <p class="text-xs text-slate-700 mt-0.5">Лактаза мен 3% натрий альгинатын тең мөлшерде араластырып, шприцке тарту.</p>
+              <button id="btn-t2-1" onclick="t2Step1Mix()" class="mt-2 w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition btn-pulse">
+                💉 Қоспаны араластыру және шприцке тарту
+              </button>
+            </div>
+
+            <!-- Stage 2 -->
+            <div id="t2-card-2" class="p-3 rounded-xl border border-slate-200 bg-slate-50 opacity-60">
+              <p class="text-xs font-bold text-slate-500 uppercase">2-кезең: Альгинат түйіршіктерін алу</p>
+              <p class="text-xs text-slate-700 mt-0.5">Шприцтен 0,2 М CaCl₂ ерітіндісіне тамшылату (Ø 1–2 мм шарлар түзіледі).</p>
+              <button id="btn-t2-2" onclick="t2Step2Drip()" disabled class="mt-2 w-full py-2 px-3 bg-slate-300 text-slate-500 text-xs font-bold rounded-lg cursor-not-allowed">
+                💧 CaCl₂ ерітіндісіне тамшылату
+              </button>
+            </div>
+
+            <!-- Stage 3 -->
+            <div id="t2-card-3" class="p-3 rounded-xl border border-slate-200 bg-slate-50 opacity-60">
+              <p class="text-xs font-bold text-slate-500 uppercase">3-кезең: Қатайту және жуу (15–20 мин)</p>
+              <p class="text-xs text-slate-700 mt-0.5">Шарларды 15–20 мин қатайтып, құйғышқа (воронка) салып сумен жуу.</p>
+              <button id="btn-t2-3" onclick="t2Step3HardenWash()" disabled class="mt-2 w-full py-2 px-3 bg-slate-300 text-slate-500 text-xs font-bold rounded-lg cursor-not-allowed">
+                ⏳ 20 мин қатайту және құйғышта жуу
+              </button>
+            </div>
+
+            <!-- Stage 4 -->
+            <div id="t2-card-4" class="p-3 rounded-xl border border-slate-200 bg-slate-50 opacity-60">
+              <p class="text-xs font-bold text-slate-500 uppercase">4-кезең: Сүтті құйғыштан өткізу</p>
+              <p class="text-xs text-slate-700 mt-0.5">Сүт шарлар арасынан өткенде лактаза лактозаны глюкоза мен галактозаға ыдыратады.</p>
+              <button id="btn-t2-4" onclick="t2Step4FilterMilk()" disabled class="mt-2 w-full py-2 px-3 bg-slate-300 text-slate-500 text-xs font-bold rounded-lg cursor-not-allowed">
+                🥛 Сүтті құйғыш арқылы өткізу
+              </button>
+            </div>
+
+            <!-- Stage 5 -->
+            <div id="t2-card-5" class="p-3 rounded-xl border border-slate-200 bg-slate-50 opacity-60">
+              <p class="text-xs font-bold text-slate-500 uppercase">5-кезең: Глюкозаға сапалық реакция</p>
+              <p class="text-xs text-slate-700 mt-0.5">Сүзіндіге CuSO₄ және NaOH тамызып, түстің өзгеруін бақылау (қызыл-кірпіш тұнба).</p>
+              <button id="btn-t2-5" onclick="t2Step5QualitativeTest()" disabled class="mt-2 w-full py-2 px-3 bg-slate-300 text-slate-500 text-xs font-bold rounded-lg cursor-not-allowed">
+                ⚗️ CuSO₄ + NaOH қосу (Сапалық реакция)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual Apparatus & Qualitative Reaction Comparison (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-4">
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex-1 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-slate-900 text-base">Биотехнологиялық қондырғы және реакция</h3>
+              <span id="t2-status-badge" class="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-100 text-emerald-800">
+                1-кезеңді орындаңыз
+              </span>
+            </div>
+
+            <!-- Interactive SVG Bench for Task 2 -->
+            <div class="bg-slate-50 rounded-2xl border border-slate-200 p-3 flex items-center justify-center min-h-[320px]">
+              <svg id="t2-svg" class="w-full max-w-2xl h-auto" viewBox="0 0 650 300">
+                <!-- Table line -->
+                <rect x="0" y="275" width="650" height="25" fill="#cbd5e1" />
+
+                <!-- ZONE 1: Syringe + CaCl2 Beaker -->
+                <g transform="translate(20, 15)">
+                  <text x="85" y="12" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">1. Шарларды қалыптастыру</text>
+                  
+                  <!-- Syringe -->
+                  <g id="t2-syringe" transform="translate(68, 22)">
+                    <rect x="8" y="0" width="18" height="10" fill="#94a3b8" />
+                    <rect x="14" y="10" width="6" height="22" fill="#cbd5e1" />
+                    <rect x="4" y="32" width="26" height="52" rx="3" fill="#ffffff" stroke="#475569" stroke-width="1.8" />
+                    <!-- Syringe liquid -->
+                    <rect id="t2-syringe-fill" x="6" y="45" width="22" height="37" fill="#86efac" opacity="0" />
+                    <!-- Needle -->
+                    <line x1="17" y1="84" x2="17" y2="104" stroke="#475569" stroke-width="2" />
+                    <!-- Falling Drop -->
+                    <circle id="t2-falling-drop" cx="17" cy="108" r="4" fill="#22c55e" opacity="0" />
+                  </g>
+
+                  <!-- Beaker with 0.2M CaCl2 -->
+                  <g transform="translate(30, 145)">
+                    <path d="M10 0 L10 100 Q10 110 20 110 L90 110 Q100 110 100 100 L100 0" fill="#ffffff" fill-opacity="0.7" stroke="#2563eb" stroke-width="2" />
+                    <rect x="12" y="35" width="86" height="73" rx="4" fill="#dbeafe" />
+                    <text x="55" y="55" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">0,2 М CaCl₂</text>
+                    
+                    <!-- Formed Alginate Beads inside beaker -->
+                    <g id="t2-beaker-beads" opacity="0">
+                      <circle cx="30" cy="95" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" class="bead-float" />
+                      <circle cx="46" cy="98" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" />
+                      <circle cx="62" cy="94" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" class="bead-float" />
+                      <circle cx="78" cy="97" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" />
+                      <circle cx="38" cy="85" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" />
+                      <circle cx="55" cy="84" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" class="bead-float" />
+                      <circle cx="72" cy="86" r="5" fill="#22c55e" stroke="#15803d" stroke-width="1.2" />
+                    </g>
+                  </g>
+                </g>
+
+                <!-- ZONE 2: Funnel with Washed Beads & Milk Filtration -->
+                <g transform="translate(225, 15)">
+                  <text x="95" y="12" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">2. Құйғыш арқылы сүзу</text>
+                  
+                  <!-- Milk Pouring Stream -->
+                  <path id="t2-milk-stream" d="M95 25 L95 75" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0" />
+                  <path id="t2-milk-stream-border" d="M95 25 L95 75" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round" opacity="0" />
+
+                  <!-- Funnel -->
+                  <polygon points="40,55 150,55 107,120 107,155 83,155 83,120" fill="#ffffff" stroke="#475569" stroke-width="2" />
+                  
+                  <!-- Beads inside Funnel -->
+                  <g id="t2-funnel-beads" opacity="0">
+                    <circle cx="75" cy="85" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="90" cy="88" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="105" cy="85" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="118" cy="82" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="83" cy="98" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="97" cy="100" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="110" cy="97" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                    <circle cx="95" cy="111" r="5.5" fill="#16a34a" stroke="#14532d" stroke-width="1" />
+                  </g>
+
+                  <!-- Filtrate Drop -->
+                  <circle id="t2-filtrate-drop" cx="95" cy="165" r="4" fill="#fef08a" opacity="0" />
+
+                  <!-- Receiving Flask -->
+                  <g transform="translate(55, 175)">
+                    <path d="M25 0 L55 0 L72 75 Q74 85 62 85 L18 85 Q6 85 8 75 Z" fill="#ffffff" stroke="#475569" stroke-width="2" />
+                    <path id="t2-flask-liquid" d="M12 55 L68 55 L72 75 Q74 84 62 84 L18 84 Q6 84 8 75 Z" fill="#fef9c3" opacity="0" />
+                    <text x="40" y="73" font-size="9.5" font-weight="700" fill="#854d0e" text-anchor="middle">Сүзінді</text>
+                  </g>
+                </g>
+
+                <!-- ZONE 3: Qualitative Glucose Test Tubes (Control vs Filtrate) -->
+                <g transform="translate(445, 15)">
+                  <text x="95" y="12" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">3. Глюкозаға реакция</text>
+                  
+                  <!-- Tube A: Control Milk (No Lactase) -->
+                  <g transform="translate(25, 65)">
+                    <text x="22" y="-10" font-size="9.5" font-weight="700" fill="#475569" text-anchor="middle">Бақылау</text>
+                    <path d="M8 0 L8 165 Q8 180 22 180 Q36 180 36 165 L36 0" fill="#ffffff" stroke="#475569" stroke-width="2" />
+                    <path id="t2-tube-control-liq" d="M10 95 L10 165 Q10 178 22 178 Q34 178 34 165 L34 95 Z" fill="#ffffff" />
+                    <text x="22" y="195" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">Жай сүт</text>
+                  </g>
+
+                  <!-- Tube B: Filtered Milk (With Glucose) -->
+                  <g transform="translate(115, 65)">
+                    <text x="22" y="-10" font-size="9.5" font-weight="700" fill="#15803d" text-anchor="middle">Сүзінді</text>
+                    <path d="M8 0 L8 165 Q8 180 22 180 Q36 180 36 165 L36 0" fill="#ffffff" stroke="#475569" stroke-width="2" />
+                    <path id="t2-tube-test-liq" d="M10 95 L10 165 Q10 178 22 178 Q34 178 34 165 L34 95 Z" fill="#fef9c3" opacity="0" />
+                    <text x="22" y="195" font-size="9" font-weight="700" fill="#15803d" text-anchor="middle">+ Глюкоза</text>
+                  </g>
+
+                  <!-- Reagent Labels -->
+                  <text id="t2-reagent-badge" x="95" y="42" font-size="10" font-weight="700" fill="#2563eb" text-anchor="middle" opacity="0">
+                    + CuSO₄ + NaOH
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            <!-- Biochemical Explanation Box -->
+            <div id="t2-reaction-explanation" class="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs sm:text-sm text-slate-700">
+              <strong>Биохимиялық үдеріс:</strong> Әр кезеңді ретімен орындап, натрий альгинатының кальций иондарымен (Ca²⁺) байланысып гельді түйіршік түзуін және лактазаның сүт қантын (лактозаны) ыдыратуын бақылаңыз.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- TAB 3: CONCLUSION & SELF-CHECK QUIZ                                 -->
+    <!-- =================================================================== -->
+    <section id="panel-3" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Textbook Reflection Questions -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+          <div class="border-b border-slate-100 pb-3">
+            <h2 class="text-lg font-extrabold text-slate-900">📝 Оқулықтағы қорытынды сұрақтар</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Тәжірибе нәтижелеріне сүйеніп, өз қорытындыңызды жазыңыз және үлгі жауаппен салыстырыңыз.</p>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-bold text-slate-800 mb-1.5">
+                1. Жұмыс мақсаты орындалды ма? Иммобилизациялану фермент белсенділігіне қалай әсер етті?
+              </label>
+              <textarea id="q-open-1" rows="3" placeholder="Өз жауабыңызды осында жазыңыз..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-sm font-bold text-slate-800 mb-1.5">
+                2. Соңғы нәтижелер қандай болды? (1- және 2-тапсырмалар бойынша)
+              </label>
+              <textarea id="q-open-2" rows="3" placeholder="Сүттің іру уақыты мен глюкозаның түзілуі туралы жазыңыз..." class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none"></textarea>
+            </div>
+
+            <button onclick="toggleSampleConclusion()" class="px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold rounded-xl shadow-sm transition">
+              👁️ Үлгі қорытындыны көру / жасыру
+            </button>
+
+            <div id="sample-conclusion" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm text-emerald-950 space-y-2">
+              <p class="font-bold text-emerald-800">✅ Үлгі қорытынды:</p>
+              <p>
+                <strong>1.</strong> Жұмыс мақсаты толық орындалды. Иммобилизацияланған ферменттер тасымалдаушымен (крахмал гелі және натрий альгинаты) байланысқанда өзінің катализдік қасиеттерін жоғалтпайды. Субстраттың тасымалдаушы ішіне диффузиялануына байланысты реакция жылдамдығы бос ферментке қарағанда сәл баяулау жүргенімен, фермент тұрақтылығы артып, оны бірнеше рет қайта қолдануға мүмкіндік туады.
+              </p>
+              <p>
+                <strong>2.</strong> 1-тапсырмада бос пепсин сүтті жылдамырақ ірітті, ал крахмалдағы пепсин сәл ұзағырақ уақытта ірітті. 2-тапсырмада натрий альгинаты түйіршіктеріндегі лактаза сүттегі лактозаны глюкозаға ыдыратты, мұны CuSO₄ және NaOH қосқанда ерітіндінің қызыл-кірпіш түске боялуы дәлелдеді.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Self-Check Quiz -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+          <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-extrabold text-slate-900">🎯 Өзін-өзі тексеру тесті</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Дұрыс жауапты таңдаңыз</p>
+            </div>
+            <span id="quiz-score-badge" class="bg-slate-100 text-slate-700 text-xs font-extrabold px-3 py-1 rounded-full">
+              Нәтиже: 0 / 3
+            </span>
+          </div>
+
+          <!-- Question 1 -->
+          <div class="space-y-2" id="quiz-q1">
+            <p class="text-sm font-bold text-slate-800">1. Иммобилизацияланған ферменттер дегеніміз не?</p>
+            <div class="space-y-1.5 text-sm">
+              <button onclick="answerQuiz(1, 0, false)" class="q1-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                А) Жоғары температурада толық ыдырайтын ферменттер
+              </button>
+              <button onclick="answerQuiz(1, 1, true)" class="q1-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Ә) Тасымалдаушылармен байланысқанда қасиеттері өзгермейтін ферменттер
+              </button>
+              <button onclick="answerQuiz(1, 2, false)" class="q1-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Б) Тек қана өсімдік жасушаларында кездесетін дәрумендер
+              </button>
+            </div>
+            <p id="quiz-fb-1" class="text-xs font-semibold hidden"></p>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="space-y-2" id="quiz-q2">
+            <p class="text-sm font-bold text-slate-800">2. 2-тапсырмада лактаза ферментін түйіршік түрінде қатайту үшін қандай ерітінді қолданылды?</p>
+            <div class="space-y-1.5 text-sm">
+              <button onclick="answerQuiz(2, 0, true)" class="q2-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                А) 3% натрий альгинаты және 0,2 М CaCl₂ ерітіндісі
+              </button>
+              <button onclick="answerQuiz(2, 1, false)" class="q2-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Ә) Тек дистилденген су мен сірке қышқылы
+              </button>
+              <button onclick="answerQuiz(2, 2, false)" class="q2-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Б) Натрий хлориді (NaCl) мен этил спирті
+              </button>
+            </div>
+            <p id="quiz-fb-2" class="text-xs font-semibold hidden"></p>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="space-y-2" id="quiz-q3">
+            <p class="text-sm font-bold text-slate-800">3. Сүзінді құрамында глюкозаның түзілгенін қандай сапалық реакция арқылы дәлелдедік?</p>
+            <div class="space-y-1.5 text-sm">
+              <button onclick="answerQuiz(3, 0, false)" class="q3-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                А) Йод ерітіндісін тамызғанда көк түске боялуы арқылы
+              </button>
+              <button onclick="answerQuiz(3, 1, false)" class="q3-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Ә) Лакмус қағазының қызаруы арқылы
+              </button>
+              <button onclick="answerQuiz(3, 2, true)" class="q3-opt w-full text-left p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
+                Б) CuSO₄ және NaOH ерітінділерін қосқанда қызыл-кірпіш түстің пайда болуы арқылы
+              </button>
+            </div>
+            <p id="quiz-fb-3" class="text-xs font-semibold hidden"></p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Message Box (Replaces alert) -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 text-sm font-medium flex items-center gap-2.5">
+      <span id="toast-icon">ℹ️</span>
+      <span id="toast-msg">Хабарлама</span>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // NAVIGATION & UI HELPERS
+    // =========================================================================
+    function switchTab(tabIndex) {
+      [1, 2, 3].forEach(i => {
+        const panel = document.getElementById(`panel-${i}`);
+        const btn = document.getElementById(`tab-btn-${i}`);
+        if (i === tabIndex) {
+          panel.classList.remove('hidden');
+          btn.classList.remove('bg-slate-100', 'text-slate-700');
+          btn.classList.add('bg-emerald-700', 'text-white', 'shadow-sm');
+        } else {
+          panel.classList.add('hidden');
+          btn.classList.remove('bg-emerald-700', 'text-white', 'shadow-sm');
+          btn.classList.add('bg-slate-100', 'text-slate-700');
+        }
+      });
+    }
+
+    function toggleTheoryModal() {
+      const banner = document.getElementById('theory-banner');
+      banner.classList.toggle('hidden');
+    }
+
+    let toastTimeout;
+    function showToast(msg, icon = '✅') {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-msg').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+      box.classList.remove('translate-y-20', 'opacity-0');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add('translate-y-20', 'opacity-0');
+      }, 3200);
+    }
+
+    // =========================================================================
+    // TASK 1 SIMULATION LOGIC (PEPSIN + STARCH GEL vs FREE PEPSIN)
+    // =========================================================================
+    const t1State = {
+      step: 0,
+      trialNum: 1,
+      timerInterval: null,
+      elapsed: 0,
+      targetFree: 13.5,
+      targetImm: 25.0,
+      freeDone: false,
+      immDone: false,
+      recordsFree: [],
+      recordsImm: []
+    };
+
+    function t1MixGel() {
+      if (t1State.step !== 0) return;
+      t1State.step = 1;
+
+      // Visual updates on Beaker
+      document.getElementById('beaker-liquid').setAttribute('fill', '#bbf7d0');
+      document.getElementById('beaker-pepsin-dots').setAttribute('opacity', '1');
+
+      // Step cards styling
+      document.getElementById('t1-check-1').classList.remove('hidden');
+      const btn1 = document.getElementById('btn-t1-mix');
+      btn1.disabled = true;
+      btn1.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'btn-pulse');
+      btn1.classList.add('bg-emerald-100', 'text-emerald-800', 'cursor-default');
+      btn1.textContent = '✓ Гель-пепсин қоспасы дайын';
+
+      // Unlock Step 2
+      const card2 = document.getElementById('t1-step-2');
+      card2.classList.remove('opacity-60', 'bg-slate-50', 'border-slate-200');
+      card2.classList.add('border-2', 'border-emerald-500', 'bg-emerald-50/40');
+      const btn2 = document.getElementById('btn-t1-prep');
+      btn2.disabled = false;
+      btn2.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+      btn2.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'text-white', 'btn-pulse');
+
+      document.getElementById('t1-status-text').textContent = '2-қадамды орындаңыз';
+      showToast('Крахмал гелі мен пепсин сәтті араластырылды!');
+    }
+
+    function t1PrepareDishes() {
+      if (t1State.step !== 1) return;
+      t1State.step = 2;
+
+      // Visual updates on Petri dishes
+      document.getElementById('dish1-gel').setAttribute('opacity', '1');
+      document.getElementById('dish2-pepsin').setAttribute('opacity', '1');
+
+      document.getElementById('t1-check-2').classList.remove('hidden');
+      const btn2 = document.getElementById('btn-t1-prep');
+      btn2.disabled = true;
+      btn2.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'btn-pulse');
+      btn2.classList.add('bg-emerald-100', 'text-emerald-800', 'cursor-default');
+      btn2.textContent = '✓ Табақшалар дайындалды';
+
+      // Unlock Step 3
+      const card3 = document.getElementById('t1-step-3');
+      card3.classList.remove('opacity-60', 'bg-slate-50', 'border-slate-200');
+      card3.classList.add('border-2', 'border-emerald-500', 'bg-emerald-50/40');
+      const btn3 = document.getElementById('btn-t1-milk');
+      btn3.disabled = false;
+      btn3.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+      btn3.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'text-white', 'btn-pulse');
+
+      document.getElementById('t1-status-text').textContent = '3-қадам: Сүт құйыңыз';
+      showToast('№1 табақшаға гель-пепсин, №2 табақшаға бос пепсин құйылды.');
+    }
+
+    function t1PourMilkAndStart() {
+      if (t1State.step !== 2) return;
+      t1State.step = 3;
+
+      // Add slight natural variance per trial
+      const variance1 = (Math.random() * 1.8 - 0.9);
+      const variance2 = (Math.random() * 2.4 - 1.2);
+      t1State.targetFree = Number((13.4 + variance1).toFixed(1));
+      t1State.targetImm = Number((25.2 + variance2).toFixed(1));
+      t1State.elapsed = 0;
+      t1State.freeDone = false;
+      t1State.immDone = false;
+
+      // Pour milk visually
+      document.getElementById('dish1-milk').setAttribute('opacity', '0.92');
+      document.getElementById('dish2-milk').setAttribute('opacity', '0.92');
+      document.getElementById('dish1-curds').setAttribute('opacity', '0');
+      document.getElementById('dish2-curds').setAttribute('opacity', '0');
+
+      document.getElementById('dish1-timer-label').textContent = 'Іру жүруде...';
+      document.getElementById('dish2-timer-label').textContent = 'Іру жүруде...';
+
+      const btn3 = document.getElementById('btn-t1-milk');
+      btn3.disabled = true;
+      btn3.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'btn-pulse');
+      btn3.classList.add('bg-amber-100', 'text-amber-800', 'cursor-default');
+      btn3.textContent = '⏱️ Реакция жүруде...';
+
+      document.getElementById('t1-status-text').textContent = 'Секундомер қосылды! Бақылаңыз...';
+
+      // Start accelerated simulation timer (runs 2.5x faster than real seconds so students don't wait too long)
+      clearInterval(t1State.timerInterval);
+      t1State.timerInterval = setInterval(() => {
+        t1State.elapsed = Number((t1State.elapsed + 0.2).toFixed(1));
+        document.getElementById('t1-stopwatch').innerHTML = `${t1State.elapsed.toFixed(1)} <span class="text-sm font-normal text-slate-400">сек</span>`;
+
+        // Gradual curdling visual opacity for Dish 2 (Free Pepsin - faster)
+        const freeProgress = Math.min(1, t1State.elapsed / t1State.targetFree);
+        document.getElementById('dish2-curds').setAttribute('opacity', freeProgress.toFixed(2));
+
+        // Gradual curdling visual opacity for Dish 1 (Immobilized Pepsin - slower)
+        const immProgress = Math.min(1, t1State.elapsed / t1State.targetImm);
+        document.getElementById('dish1-curds').setAttribute('opacity', immProgress.toFixed(2));
+
+        if (!t1State.freeDone && t1State.elapsed >= t1State.targetFree) {
+          t1State.freeDone = true;
+          document.getElementById('dish2-timer-label').textContent = `Іріді: ${t1State.targetFree} с ✓`;
+          showToast(`№2 табақшада (бос пепсин) сүт ${t1State.targetFree} секундта іріді!`, '🥛');
+        }
+
+        if (!t1State.immDone && t1State.elapsed >= t1State.targetImm) {
+          t1State.immDone = true;
+          document.getElementById('dish1-timer-label').textContent = `Іріді: ${t1State.targetImm} с ✓`;
+          clearInterval(t1State.timerInterval);
+
+          document.getElementById('t1-check-3').classList.remove('hidden');
+          btn3.textContent = '✓ Екі табақшада сүт іріді';
+          document.getElementById('t1-status-text').textContent = 'Нәтижені кестеге жазыңыз!';
+
+          // Enable Record button
+          const recBtn = document.getElementById('btn-t1-record');
+          recBtn.disabled = false;
+          recBtn.classList.remove('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+          recBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'text-white', 'btn-pulse');
+
+          showToast(`№1 табақшада (иммобилизацияланған) сүт ${t1State.targetImm} секундта іріді!`, '🎉');
+        }
+      }, 80);
+    }
+
+    function t1RecordTrial() {
+      if (!t1State.immDone) return;
+      const idx = t1State.recordsFree.length;
+      if (idx >= 3) {
+        showToast('Барлық 3 тәжірибе кестеге жазылды!', '📊');
+        return;
+      }
+
+      t1State.recordsFree.push(t1State.targetFree);
+      t1State.recordsImm.push(t1State.targetImm);
+
+      const col = idx + 1;
+      document.getElementById(`cell-free-${col}`).textContent = `${t1State.targetFree} с`;
+      document.getElementById(`cell-imm-${col}`).textContent = `${t1State.targetImm} с`;
+
+      // Calculate averages
+      const avgFree = (t1State.recordsFree.reduce((a, b) => a + b, 0) / t1State.recordsFree.length).toFixed(1);
+      const avgImm = (t1State.recordsImm.reduce((a, b) => a + b, 0) / t1State.recordsImm.length).toFixed(1);
+
+      document.getElementById('cell-free-avg').textContent = `${avgFree} с`;
+      document.getElementById('cell-imm-avg').textContent = `${avgImm} с`;
+
+      const recBtn = document.getElementById('btn-t1-record');
+      recBtn.disabled = true;
+      recBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600', 'text-white', 'btn-pulse');
+      recBtn.classList.add('bg-slate-700', 'text-slate-400', 'cursor-not-allowed');
+
+      if (t1State.recordsFree.length < 3) {
+        t1State.trialNum = t1State.recordsFree.length + 1;
+        document.getElementById('t1-trial-badge').textContent = `Тәжірибе №${t1State.trialNum}`;
+        showToast(`Тәжірибе №${col} жазылды! Келесі тәжірибе №${t1State.trialNum} үшін "Қайталау" батырмасын басыңыз.`);
+      } else {
+        document.getElementById('t1-trial-badge').textContent = '3/3 тәжірибе аяқталды ✓';
+        showToast('Барлық 3 тәжірибе аяқталды! Орташа уақыт есептелді.', '🏆');
+      }
+    }
+
+    function t1ResetCurrentTrial() {
+      clearInterval(t1State.timerInterval);
+      t1State.step = 0;
+      t1State.elapsed = 0;
+      t1State.freeDone = false;
+      t1State.immDone = false;
+
+      document.getElementById('t1-stopwatch').innerHTML = `00.0 <span class="text-sm font-normal text-slate-400">сек</span>`;
+      document.getElementById('beaker-liquid').setAttribute('fill', '#e0f2fe');
+      document.getElementById('beaker-pepsin-dots').setAttribute('opacity', '0');
+      document.getElementById('dish1-gel').setAttribute('opacity', '0');
+      document.getElementById('dish1-milk').setAttribute('opacity', '0');
+      document.getElementById('dish1-curds').setAttribute('opacity', '0');
+      document.getElementById('dish2-pepsin').setAttribute('opacity', '0');
+      document.getElementById('dish2-milk').setAttribute('opacity', '0');
+      document.getElementById('dish2-curds').setAttribute('opacity', '0');
+
+      document.getElementById('dish1-timer-label').textContent = 'Күтуде...';
+      document.getElementById('dish2-timer-label').textContent = 'Күтуде...';
+
+      // Reset buttons & cards
+      ['t1-check-1', 't1-check-2', 't1-check-3'].forEach(id => document.getElementById(id).classList.add('hidden'));
+
+      const btn1 = document.getElementById('btn-t1-mix');
+      btn1.disabled = false;
+      btn1.className = 'mt-3 w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm shadow-sm transition btn-pulse';
+      btn1.textContent = '🥣 Крахмал мен пепсинді араластыру';
+
+      const card2 = document.getElementById('t1-step-2');
+      card2.className = 'p-3.5 rounded-xl border border-slate-200 bg-slate-50 opacity-60 transition';
+      const btn2 = document.getElementById('btn-t1-prep');
+      btn2.disabled = true;
+      btn2.className = 'mt-3 w-full py-2.5 px-4 bg-slate-300 text-slate-500 font-semibold rounded-xl text-sm transition cursor-not-allowed';
+      btn2.textContent = '🧫 Петри табақшаларын дайындау';
+
+      const card3 = document.getElementById('t1-step-3');
+      card3.className = 'p-3.5 rounded-xl border border-slate-200 bg-slate-50 opacity-60 transition';
+      const btn3 = document.getElementById('btn-t1-milk');
+      btn3.disabled = true;
+      btn3.className = 'mt-3 w-full py-2.5 px-4 bg-slate-300 text-slate-500 font-semibold rounded-xl text-sm transition cursor-not-allowed';
+      btn3.textContent = '🥛 10 мл сүт құю және Секундомерді іске қосу';
+
+      const recBtn = document.getElementById('btn-t1-record');
+      recBtn.disabled = true;
+      recBtn.className = 'px-3.5 py-2 bg-slate-700 text-slate-400 rounded-xl text-xs font-bold transition cursor-not-allowed';
+
+      document.getElementById('t1-status-text').textContent = '1-қадамды орындаңыз';
+    }
+
+    function t1ClearTable() {
+      t1State.recordsFree = [];
+      t1State.recordsImm = [];
+      t1State.trialNum = 1;
+      document.getElementById('t1-trial-badge').textContent = 'Тәжірибе №1';
+      [1, 2, 3].forEach(i => {
+        document.getElementById(`cell-free-${i}`).textContent = '—';
+        document.getElementById(`cell-imm-${i}`).textContent = '—';
+      });
+      document.getElementById('cell-free-avg').textContent = '—';
+      document.getElementById('cell-imm-avg').textContent = '—';
+      t1ResetCurrentTrial();
+      showToast('Кесте тазаланды.');
+    }
+
+    // =========================================================================
+    // TASK 2 SIMULATION LOGIC (IMMOBILIZED LACTASE IN ALGINATE BEADS)
+    // =========================================================================
+    let t2Stage = 0;
+
+    function unlockT2Card(stageNum, btnId) {
+      const card = document.getElementById(`t2-card-${stageNum}`);
+      card.classList.remove('opacity-60', 'bg-slate-50', 'border-slate-200');
+      card.classList.add('border-2', 'border-emerald-500', 'bg-emerald-50/40');
+      const btn = document.getElementById(btnId);
+      btn.disabled = false;
+      btn.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+      btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'text-white', 'btn-pulse');
+    }
+
+    function completeT2Btn(btnId, text) {
+      const btn = document.getElementById(btnId);
+      btn.disabled = true;
+      btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'btn-pulse');
+      btn.classList.add('bg-emerald-100', 'text-emerald-800', 'cursor-default');
+      btn.textContent = text;
+    }
+
+    function t2Step1Mix() {
+      if (t2Stage !== 0) return;
+      t2Stage = 1;
+
+      document.getElementById('t2-syringe-fill').setAttribute('opacity', '1');
+      completeT2Btn('btn-t2-1', '✓ Қоспа шприцке тартылды');
+      unlockT2Card(2, 'btn-t2-2');
+
+      document.getElementById('t2-status-badge').textContent = '2-кезең: Тамшылату';
+      document.getElementById('t2-reaction-explanation').innerHTML =
+        '<strong>1-кезең:</strong> Концентрацияланған лактаза мен 3% натрий альгинаты (E401) біркелкі араласып, тұтқыр ерітінді түзді.';
+      showToast('Қоспа дайындалып, 5 мл-лік шприцке тартылды!');
+    }
+
+    function t2Step2Drip() {
+      if (t2Stage !== 1) return;
+      t2Stage = 2;
+
+      const drop = document.getElementById('t2-falling-drop');
+      drop.setAttribute('opacity', '1');
+      drop.classList.add('animate-drip');
+
+      setTimeout(() => {
+        drop.setAttribute('opacity', '0');
+        drop.classList.remove('animate-drip');
+        document.getElementById('t2-beaker-beads').setAttribute('opacity', '1');
+      }, 750);
+
+      completeT2Btn('btn-t2-2', '✓ Ø 1–2 мм түйіршіктер түзілді');
+      unlockT2Card(3, 'btn-t2-3');
+
+      document.getElementById('t2-status-badge').textContent = '3-кезең: Қатайту және жуу';
+      document.getElementById('t2-reaction-explanation').innerHTML =
+        '<strong>2-кезең (Иондық алмасу):</strong> Натрий альгинаты тамшылары 0,2 М CaCl₂ ерітіндісіне түскенде Na⁺ иондары Ca²⁺ иондарымен алмасып, ерімейтін кальций альгинаты қабықшасын (Ø 1–2 мм шарлар) түзеді. Лактаза молекулалары шар ішінде бекітіледі.';
+      showToast('CaCl₂ ерітіндісінде диаметрi 1–2 мм шарлар түзілді!');
+    }
+
+    function t2Step3HardenWash() {
+      if (t2Stage !== 2) return;
+      t2Stage = 3;
+
+      const btn3 = document.getElementById('btn-t2-3');
+      btn3.textContent = '⏳ 20 мин қатайтылуда...';
+
+      setTimeout(() => {
+        document.getElementById('t2-funnel-beads').setAttribute('opacity', '1');
+        completeT2Btn('btn-t2-3', '✓ Шарлар қатайып, құйғышта жуылды');
+        unlockT2Card(4, 'btn-t2-4');
+
+        document.getElementById('t2-status-badge').textContent = '4-кезең: Сүтті өткізу';
+        document.getElementById('t2-reaction-explanation').innerHTML =
+          '<strong>3-кезең:</strong> 15–20 минут ішінде гель құрылымы толық қатайды. Артық кальций хлоридін кетіру үшін шарлар құйғышта дистилденген сумен жуылды.';
+        showToast('Түйіршіктер қатайып, құйғышқа орналастырылды!');
+      }, 900);
+    }
+
+    function t2Step4FilterMilk() {
+      if (t2Stage !== 3) return;
+      t2Stage = 4;
+
+      document.getElementById('t2-milk-stream-border').setAttribute('opacity', '1');
+      document.getElementById('t2-milk-stream').setAttribute('opacity', '1');
+
+      const fDrop = document.getElementById('t2-filtrate-drop');
+      fDrop.setAttribute('opacity', '1');
+      fDrop.classList.add('animate-drip');
+
+      setTimeout(() => {
+        document.getElementById('t2-milk-stream-border').setAttribute('opacity', '0');
+        document.getElementById('t2-milk-stream').setAttribute('opacity', '0');
+        fDrop.setAttribute('opacity', '0');
+        fDrop.classList.remove('animate-drip');
+
+        document.getElementById('t2-flask-liquid').setAttribute('opacity', '1');
+        document.getElementById('t2-tube-test-liq').setAttribute('opacity', '1');
+      }, 850);
+
+      completeT2Btn('btn-t2-4', '✓ Сүт сүзілді (Лактоза → Глюкоза)');
+      unlockT2Card(5, 'btn-t2-5');
+
+      document.getElementById('t2-status-badge').textContent = '5-кезең: Сапалық реакция';
+      document.getElementById('t2-reaction-explanation').innerHTML =
+        '<strong>4-кезең (Ферментативті гидролиз):</strong> Сүт құйғыштағы иммобилизацияланған лактаза түйіршіктері арқылы өткенде, сүт қанты (<strong>лактоза</strong>) гидролизденіп, <strong>глюкоза</strong> мен <strong>галактозаға</strong> ыдырайды.';
+      showToast('Сүт шарлар арқылы өтіп, сүзіндіде глюкоза түзілді!');
+    }
+
+    function t2Step5QualitativeTest() {
+      if (t2Stage !== 4) return;
+      t2Stage = 5;
+
+      document.getElementById('t2-reagent-badge').setAttribute('opacity', '1');
+      // Control tube turns blue (Cu(OH)2, no free glucose reducing reaction)
+      document.getElementById('t2-tube-control-liq').setAttribute('fill', '#3b82f6');
+      // Filtrate tube turns bright brick-red / orange (Cu2O precipitate confirming glucose!)
+      document.getElementById('t2-tube-test-liq').setAttribute('fill', '#ea580c');
+
+      completeT2Btn('btn-t2-5', '✓ Сапалық реакция аяқталды!');
+      document.getElementById('t2-status-badge').textContent = 'Тәжірибе сәтті аяқталды ✓';
+      document.getElementById('t2-reaction-explanation').innerHTML =
+        '<strong>5-кезең (Нәтиже):</strong> Мыс сульфаты (CuSO₄) мен сілті (NaOH) қосқанда сүзінді <strong>қызыл-кірпіш түске</strong> (Cu₂O тұнбасы) боялды! Бұл сүттегі лактозаның иммобилизацияланған лактаза әсерінен глюкозаға сәтті ыдырағанын дәлелдейді.';
+      showToast('Қызыл-кірпіш түс пайда болды — глюкоза анықталды!', '🎉');
+    }
+
+    function t2Reset() {
+      t2Stage = 0;
+      document.getElementById('t2-syringe-fill').setAttribute('opacity', '0');
+      document.getElementById('t2-beaker-beads').setAttribute('opacity', '0');
+      document.getElementById('t2-funnel-beads').setAttribute('opacity', '0');
+      document.getElementById('t2-flask-liquid').setAttribute('opacity', '0');
+      document.getElementById('t2-tube-test-liq').setAttribute('opacity', '0');
+      document.getElementById('t2-tube-test-liq').setAttribute('fill', '#fef9c3');
+      document.getElementById('t2-tube-control-liq').setAttribute('fill', '#ffffff');
+      document.getElementById('t2-reagent-badge').setAttribute('opacity', '0');
+
+      const btnTexts = [
+        '💉 Қоспаны араластыру және шприцке тарту',
+        '💧 CaCl₂ ерітіндісіне тамшылату',
+        '⏳ 20 мин қатайту және құйғышта жуу',
+        '🥛 Сүтті құйғыш арқылы өткізу',
+        '⚗️ CuSO₄ + NaOH қосу (Сапалық реакция)'
+      ];
+
+      [1, 2, 3, 4, 5].forEach(i => {
+        const card = document.getElementById(`t2-card-${i}`);
+        const btn = document.getElementById(`btn-t2-${i}`);
+        btn.textContent = btnTexts[i - 1];
+        if (i === 1) {
+          card.className = 'p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50/40';
+          btn.disabled = false;
+          btn.className = 'mt-2 w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition btn-pulse';
+        } else {
+          card.className = 'p-3 rounded-xl border border-slate-200 bg-slate-50 opacity-60';
+          btn.disabled = true;
+          btn.className = 'mt-2 w-full py-2 px-3 bg-slate-300 text-slate-500 text-xs font-bold rounded-lg cursor-not-allowed';
+        }
+      });
+
+      document.getElementById('t2-status-badge').textContent = '1-кезеңді орындаңыз';
+      document.getElementById('t2-reaction-explanation').innerHTML =
+        '<strong>Биохимиялық үдеріс:</strong> Әр кезеңді ретімен орындап, натрий альгинатының кальций иондарымен (Ca²⁺) байланысып гельді түйіршік түзуін және лактазаның сүт қантын (лактозаны) ыдыратуын бақылаңыз.';
+    }
+
+    // =========================================================================
+    // TAB 3: CONCLUSION & QUIZ LOGIC
+    // =========================================================================
+    function toggleSampleConclusion() {
+      const box = document.getElementById('sample-conclusion');
+      box.classList.toggle('hidden');
+    }
+
+    const quizAnswers = { 1: null, 2: null, 3: null };
+
+    function answerQuiz(qNum, optIdx, isCorrect) {
+      const options = document.querySelectorAll(`.q${qNum}-opt`);
+      const fb = document.getElementById(`quiz-fb-${qNum}`);
+
+      options.forEach((btn, idx) => {
+        btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'bg-rose-100', 'border-rose-500', 'text-rose-900');
+        if (idx === optIdx) {
+          if (isCorrect) {
+            btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'font-bold');
+          } else {
+            btn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+          }
+        }
+      });
+
+      quizAnswers[qNum] = isCorrect;
+      fb.classList.remove('hidden', 'text-emerald-700', 'text-rose-600');
+      if (isCorrect) {
+        fb.textContent = '✅ Дұрыс жауап!';
+        fb.classList.add('text-emerald-700');
+      } else {
+        fb.textContent = '❌ Қате. Қайта ойланып көріңіз.';
+        fb.classList.add('text-rose-600');
+      }
+
+      const score = Object.values(quizAnswers).filter(Boolean).length;
+      document.getElementById('quiz-score-badge').textContent = `Нәтиже: ${score} / 3`;
+    }
+  </script>
+</body>
+</html>
